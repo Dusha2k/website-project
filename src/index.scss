@@ -1,0 +1,28 @@
+@import url('https://fonts.googleapis.com/css2?family=Mulish:wght@300;400;500;600;700;800;900&family=Oswald:wght@300;400;500;600;700&display=swap');
+
+* {
+  color: white;
+  font-family: "Mulish", sans-serif;
+  &:before {
+    box-sizing: border-box;
+  }
+  &:after {
+    box-sizing: border-box;
+  }
+  .i {
+    font-family: 'Material Icons';
+  }
+}
+
+body {
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  background: #0b0c2a;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
