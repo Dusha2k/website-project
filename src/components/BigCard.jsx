@@ -44,10 +44,7 @@ const CardBG = styled.div`
   height: 325px;
   position: relative;
   border-radius: 5px;
-  background-image: url(${imgBG});
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: top center;
+  background: url(${imgBG}) no-repeat top center / cover;
 `;
 
 const Episode = styled.div`

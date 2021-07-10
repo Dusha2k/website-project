@@ -3,15 +3,11 @@
 * {
   color: white;
   font-family: "Mulish", sans-serif;
-  &:before {
-    box-sizing: border-box;
-  }
-  &:after {
-    box-sizing: border-box;
-  }
-  .i {
-    font-family: 'Material Icons';
-  }
+}
+
+* .i {
+  font-family: 'Material Icons';
+
 }
 
 body {

@@ -91,10 +91,8 @@ const Carousel = styled(Slider)`
 `;
 
 const FirstBG = styled.div`
-  background-image: url("https://wallpaper-mania.com/wp-content/uploads/2018/09/High_resolution_wallpaper_background_ID_77700076538.jpg");
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: top center;
+  background: url("https://wallpaper-mania.com/wp-content/uploads/2018/09/High_resolution_wallpaper_background_ID_77700076538.jpg")
+    no-repeat top center / cover;
   padding: 250px 0 42px 50px;
   border-radius: 10px;
   overflow: hidden;
@@ -102,10 +100,12 @@ const FirstBG = styled.div`
   width: unset !important;
 `;
 const SecondBG = styled(FirstBG)`
-  background-image: url("https://cdn.wallpapersafari.com/90/6/jWRAie.jpg");
+  background: url("https://cdn.wallpapersafari.com/90/6/jWRAie.jpg") no-repeat
+    top center / cover;
 `;
 const ThirdBG = styled(FirstBG)`
-  background-image: url("https://i.pinimg.com/originals/53/56/61/535661d28d15417ec9ca347e0a23fee1.jpg");
+  background: url("https://i.pinimg.com/originals/53/56/61/535661d28d15417ec9ca347e0a23fee1.jpg")
+    no-repeat top center / cover;
 `;
 
 const Wrap = styled.div`
