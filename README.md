@@ -1,6 +1,6 @@
 ## Anime search site
 
-###Tech stack:
+##Tech stack:
 - React 
 - Redux
 - Redux thunk 
