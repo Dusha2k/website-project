@@ -4,20 +4,24 @@ import { Grid } from "@material-ui/core";
 
 import imgBG from "../assets/img/trending/trend-1.jpg";
 
-const BigCard = () => {
+const BigCard = ({ episodes, russian, episodes_aired, score, image, id }) => {
   return (
     <Grid item lg={4} md={4} sm={6} xs={12}>
       <Card>
-        <CardBG>
-          <Episode>182 / 182</Episode>
+        <CardBG url={image.original}>
+          <Episode>
+            {episodes !== 0
+              ? `${episodes} / ${episodes}`
+              : `${episodes_aired} / ?`}
+          </Episode>
           <Rating>
             <span className="material-icons-outlined i">star</span>
-            9.17
+            {score}
           </Rating>
-          <View>
-            <span className="material-icons-outlined i">visibility</span>
-            138057
-          </View>
+          {/*<View>*/}
+          {/*  <span className="material-icons-outlined i">visibility</span>*/}
+          {/*  138057*/}
+          {/*</View>*/}
         </CardBG>
         <Description>
           <GenresList>
@@ -26,7 +30,7 @@ const BigCard = () => {
             <li>Сёнен</li>
           </GenresList>
           <h5>
-            <a>Gintama Movie 2: Kanketsu-hen - Yorozuya yo Eien</a>
+            <a>{russian}</a>
           </h5>
         </Description>
       </Card>
@@ -44,7 +48,8 @@ const CardBG = styled.div`
   height: 325px;
   position: relative;
   border-radius: 5px;
-  background: url(${imgBG}) no-repeat top center / cover;
+  background: url("https://shikimori.one/${(props) => props.url}") no-repeat top
+    center / cover;
 `;
 
 const Episode = styled.div`

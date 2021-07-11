@@ -1,16 +1,25 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Container, Grid } from "@material-ui/core";
 import SimpleSlider from "../components/Carousel";
 import styled from "styled-components";
 
 import MediumCard from "../components/MediumCard";
+import BigTitle from "../components/BigTitle";
 import BigCard from "../components/BigCard";
-import arrowRight from "../assets/icons/arrow_right.svg";
-
-const i = [1123, 233, 323, 413, 5123, 6123];
+import { useDispatch, useSelector } from "react-redux";
+import { fetchHomepageAnime } from "../redux/actions/anime";
 const i2 = [3213, 241124, 123123, 238974, 12487, 12498, 12837];
 
 const Home = () => {
+  const dispatch = useDispatch();
+  const { items, itemsSeason, itemsNew } = useSelector(
+    ({ homepageAnimeReducer }) => homepageAnimeReducer
+  );
+  console.log(items);
+
+  useEffect(() => {
+    dispatch(fetchHomepageAnime());
+  }, []);
   return (
     <>
       <Container maxWidth="lg">
@@ -19,68 +28,26 @@ const Home = () => {
           <Grid container spacing={4}>
             <Grid item lg={8}>
               <Sections>
-                <Trending>
-                  <Grid container>
-                    <Grid item lg={8} md={8} sm={8}>
-                      <SectionTitle>
-                        <LeftTitle>Аниме этого сезона</LeftTitle>
-                      </SectionTitle>
-                    </Grid>
-                    <Grid item lg={4} md={4} sm={4}>
-                      <SectionBtn>
-                        <Btn href="#">Показать все</Btn>
-                        <img src={arrowRight} alt="arrow" />
-                      </SectionBtn>
-                    </Grid>
-                  </Grid>
-                </Trending>
+                <BigTitle title={"Популярное"} />
                 <Grid container spacing={4}>
-                  {i.map((item) => {
-                    return <BigCard key={item}></BigCard>;
+                  {items.map((item) => {
+                    return <BigCard {...item} key={item.id} />;
                   })}
                 </Grid>
               </Sections>
               <Sections>
-                <Trending>
-                  <Grid container>
-                    <Grid item lg={8} md={8} sm={8}>
-                      <SectionTitle>
-                        <LeftTitle>Аниме этого сезона</LeftTitle>
-                      </SectionTitle>
-                    </Grid>
-                    <Grid item lg={4} md={4} sm={4}>
-                      <SectionBtn>
-                        <Btn href="#">Показать все</Btn>
-                        <img src={arrowRight} alt="arrow" />
-                      </SectionBtn>
-                    </Grid>
-                  </Grid>
-                </Trending>
+                <BigTitle title={"Популярное"} />
                 <Grid container spacing={4}>
-                  {i.map((item) => {
-                    return <BigCard key={item}></BigCard>;
+                  {itemsSeason.map((item) => {
+                    return <BigCard {...item} key={item.id} />;
                   })}
                 </Grid>
               </Sections>
               <Sections>
-                <Trending>
-                  <Grid container>
-                    <Grid item lg={8} md={8} sm={8}>
-                      <SectionTitle>
-                        <LeftTitle>Аниме этого сезона</LeftTitle>
-                      </SectionTitle>
-                    </Grid>
-                    <Grid item lg={4} md={4} sm={4}>
-                      <SectionBtn>
-                        <Btn href="#">Показать все</Btn>
-                        <img src={arrowRight} alt="arrow" />
-                      </SectionBtn>
-                    </Grid>
-                  </Grid>
-                </Trending>
+                <BigTitle title={"Популярное"} />
                 <Grid container spacing={4}>
-                  {i.map((item) => {
-                    return <BigCard key={item}></BigCard>;
+                  {itemsNew.map((item) => {
+                    return <BigCard {...item} key={item.id} />;
                   })}
                 </Grid>
               </Sections>
@@ -96,7 +63,7 @@ const Home = () => {
                 </RightList>
               </RightSection>
               {i2.map((item) => {
-                return <MediumCard key={item}></MediumCard>;
+                return <MediumCard key={item} />;
               })}
             </Grid>
           </Grid>
@@ -117,21 +84,18 @@ const MainContent = styled.section`
   padding-top: 80px;
 `;
 
-const Trending = styled.div``;
-
-const SectionTitle = styled.div`
-  margin-bottom: 30px;
+const RightSection = styled.div`
+  position: relative;
 `;
-
-const LeftTitle = styled.h4`
-{
+const RightTitle = styled.h4`
+  font-size: 18px;
+  margin-bottom: 32px;
   font-weight: 600;
   line-height: 21px;
   text-transform: uppercase;
   padding-left: 20px;
   position: relative;
   font-family: "Oswald", sans-serif !important;
-  font-size: 24px;
   margin-top: 0;
   &:after {
     position: absolute;
@@ -142,34 +106,6 @@ const LeftTitle = styled.h4`
     background: #e53637;
     content: "";
   }
-`;
-
-const SectionBtn = styled.div`
-  text-align: right;
-  margin-bottom: 30px;
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  img {
-    margin-left: 5px;
-  }
-`;
-
-const Btn = styled.a`
-  display: inline-block;
-  font-size: 13px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  text-decoration: none;
-`;
-
-const RightSection = styled.div`
-  position: relative;
-`;
-const RightTitle = styled(LeftTitle)`
-  font-size: 18px;
-  margin-bottom: 32px;
 `;
 const RightList = styled.ul`
   position: absolute;
