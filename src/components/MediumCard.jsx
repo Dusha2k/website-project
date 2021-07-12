@@ -1,17 +1,26 @@
 import React from "react";
 import styled from "styled-components";
-import imgBG from "../assets/img/sidebar/tv-2.jpg";
+import { Link } from "react-router-dom";
 
-const MdCard = () => {
+const MdCard = ({ episodes, episodes_aired, score, image, russian }) => {
+  const animeEpisodes = () => {
+    if (episodes === 0) {
+      return `${episodes_aired} / ?`;
+    } else if (episodes_aired === 0) {
+      return `${episodes} / ${episodes}`;
+    } else {
+      return `${episodes_aired} / ${episodes}`;
+    }
+  };
   return (
     <>
-      <Wrap>
-        <Episode>182 / ?</Episode>
-        <View>
-          <span className="material-icons-outlined i">visibility</span> 109832
-        </View>
+      <Wrap image={image.original}>
+        <Episode>{animeEpisodes()}</Episode>
+        <Rank>
+          <span className="material-icons-outlined i">star</span> {score}
+        </Rank>
         <h5>
-          <a>The Seven Deadly Sins: Wrath of the Gods</a>
+          <A to="/current">{russian}</A>
         </h5>
       </Wrap>
     </>
@@ -25,7 +34,19 @@ const Wrap = styled.div`
   position: relative;
   border-radius: 5px;
   margin-bottom: 20px;
-  background: url(${imgBG}) no-repeat top center / cover;
+  background: url("https://shikimori.one${(props) => props.image}") no-repeat
+    center / cover;
+  &:before {
+    content: "";
+    display: block;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    transition: background 0.5s;
+    background: rgba(0, 0, 0, 0.2);
+  }
 
   h5 {
     position: absolute;
@@ -35,12 +56,14 @@ const Wrap = styled.div`
     padding: 0 30px 0 20px;
     margin: 0;
     font-size: 18px;
-    a {
-      color: #ffffff;
-      font-weight: 700;
-      line-height: 26px;
-    }
   }
+`;
+
+const A = styled(Link)`
+  color: #ffffff;
+  font-weight: 700;
+  line-height: 26px;
+  text-decoration: none;
 `;
 
 const Episode = styled.div`
@@ -54,7 +77,7 @@ const Episode = styled.div`
   top: 10px;
 `;
 
-const View = styled.div`
+const Rank = styled.div`
   font-size: 13px;
   background: #3d3d3d;
   display: flex;

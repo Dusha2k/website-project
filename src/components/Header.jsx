@@ -1,47 +1,76 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { Container, Grid } from "@material-ui/core";
 import logo from "../assets/img/logo.png";
-
-import accountIcon from "../assets/icons/account.svg";
-import homeIcon from "../assets/icons/home.svg";
+import { Link } from "react-router-dom";
 
 const Header = () => {
+  const [menuActive, setMenuActive] = useState(false);
+  const items = [
+    { value: "Главная", href: "/main" },
+    { value: "Аниме", href: "/anime" },
+    { value: "Манга", href: "/manga" },
+    { value: "Случайное аниме", href: "/main" },
+  ];
   return (
     <Head>
       <Container maxWidth="lg">
-        <Grid container>
-          <Grid item lg={2}>
+        <Grid container justifyContent={"space-between"}>
+          <Grid item lg={2} md={2} sm={2}>
             <Logo>
-              <a>
-                <img src={logo} />
-              </a>
+              <LogoLink to="/">
+                <img src={logo} alt="logo" />
+              </LogoLink>
             </Logo>
           </Grid>
-          <Grid item lg={8}>
+          <Grid item lg={8} md={8} sm={1}>
             <NavBar>
               <Wrap>
-                <a className="active">Главная</a>
+                <A to="/" className="active">
+                  Главная
+                </A>
               </Wrap>
               <Wrap>
-                <a>Аниме</a>
+                <A to="/filter">Аниме</A>
               </Wrap>
               <Wrap>
-                <a>Манга</a>
+                <A to="/manga">Манга</A>
               </Wrap>
               <Wrap>
-                <a>Случайное аниме</a>
+                <A to="/current">Случайное аниме</A>
               </Wrap>
             </NavBar>
           </Grid>
-          <Grid item lg={2}>
+          <Grid item lg={2} md={2} sm={2} xs={2}>
             <Icons>
-              <img src={accountIcon} />
-              <img src={homeIcon} />
+              {/*<img src={accountIcon} alt="account" />*/}
+              {/*<img src={homeIcon} alt="home" />*/}
+              <BurgerBtn onClick={() => setMenuActive(!menuActive)}>
+                <span />
+              </BurgerBtn>
             </Icons>
           </Grid>
         </Grid>
       </Container>
+      <Menu
+        className={menuActive ? "menu active" : "menu"}
+        onClick={() => setMenuActive(!menuActive)}
+      >
+        <Blur>
+          <MenuContent onClick={(e) => e.stopPropagation()}>
+            <MenuHeader>
+              <img src={logo} alt="logo" />
+            </MenuHeader>
+            <ul>
+              {items.map((items) => (
+                <li key={items.value}>
+                  <a href={items.href}>{items.value}</a>
+                </li>
+              ))}
+            </ul>
+          </MenuContent>
+        </Blur>
+      </Menu>
     </Head>
   );
 };
@@ -50,27 +79,40 @@ export default Header;
 
 const Head = styled.header`
   background-color: #070720;
+  position: relative;
 `;
 
 const Logo = styled.div`
   padding: 20px 0;
-  a {
-    cursor: pointer;
-  }
+`;
+
+const LogoLink = styled(Link)`
+  cursor: pointer;
+`;
+
+const A = styled(Link)`
+  text-decoration: none;
 `;
 
 const NavBar = styled.nav`
   display: flex;
   justify-content: center;
+  @media (max-width: 768px) {
+    display: none;
+  }
 `;
 
 const Wrap = styled.div`
   margin-right: 14px;
   padding: 20px;
-  a.active {
+  @media (max-width: 968px) {
+    margin-right: 0;
+    padding: 15px;
+  }
+  A.active {
     color: white;
   }
-  a {
+  A {
     font-size: 17px;
     color: #b7b7b7;
     display: block;
@@ -93,11 +135,11 @@ const Wrap = styled.div`
     }
   }
   &:hover {
-    a:after {
+    A:after {
       opacity: 1;
       transform: scaleX(1);
     }
-    a {
+    A {
       color: white;
     }
   }
@@ -112,4 +154,106 @@ const Icons = styled.div`
     margin-left: 30px;
     cursor: pointer;
   }
+`;
+
+const BurgerBtn = styled.div`
+  width: 20px;
+  height: 20px;
+  margin-right: 26px;
+  position: relative;
+  cursor: pointer;
+  display: none;
+  @media (max-width: 967px) {
+    display: block;
+  }
+
+  span {
+    content: "";
+    position: absolute;
+    top: 9px;
+    width: 20px;
+    background-color: white;
+    height: 2px;
+  }
+
+  &:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    width: 20px;
+    background-color: white;
+    height: 2px;
+  }
+
+  &:after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    width: 20px;
+    background-color: white;
+    height: 2px;
+  }
+`;
+
+const Menu = styled.div`
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  transform: translateX(-130%);
+  z-index: 2;
+  &.active {
+    transform: translateX(0);
+  }
+`;
+
+const Blur = styled.div`
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  backdrop-filter: blur(2px);
+`;
+
+const MenuContent = styled.div`
+  width: 30%;
+  height: 100%;
+  background-color: #070720;
+  transition: all 0.4s;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  @media (max-width: 768px) {
+    width: 50%;
+  }
+  ul {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0;
+    list-style: none;
+    padding: 0;
+    li {
+      margin-bottom: 20px;
+      a {
+        text-decoration: none;
+        font-size: 1.3rem;
+        color: #b7b7b7;
+        display: block;
+        font-weight: 700;
+        position: relative;
+        cursor: pointer;
+        @media (max-width: 540px) {
+          font-size: 1rem;
+        }
+      }
+    }
+  }
+`;
+
+const MenuHeader = styled.div`
+  font-size: 2rem;
+  color: white;
+  margin: 35px 0 35px 0;
 `;

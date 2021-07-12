@@ -2,6 +2,7 @@ import React from "react";
 import { Container } from "@material-ui/core";
 import styled from "styled-components";
 import { Grid } from "@material-ui/core";
+import { Link } from "react-router-dom";
 
 import logo from "../assets/img/logo.png";
 import telegram from "../assets/icons/telegram.svg";
@@ -13,32 +14,40 @@ const Footer = () => {
   return (
     <SectionFooter>
       <PageUp>
-        <a href="#">
-          <img src={arrow} />
-        </a>
+        <span onClick={() => window.scrollTo(0, 0)}>
+          <img src={arrow} alt="arrow" />
+        </span>
       </PageUp>
       <Container maxWidth="lg">
         <Grid container>
           <Grid item lg={3} xs={8}>
-            <img src={logo} />
+            <img src={logo} alt="logo" />
           </Grid>
           <Grid item lg={6}>
             <FooterNav>
               <div>
-                <a>Главная</a>
+                <A to="/">Главная</A>
               </div>
               <div>
-                <a>Аниме</a>
+                <A to="/current">Аниме</A>
               </div>
               <Social>
-                <a>
-                  <img src={telegram} />
+                <a href="https://t.me/Dusha2k" target="_blank" rel="noreferrer">
+                  <img src={telegram} alt="tg" />
                 </a>
-                <a>
-                  <img src={github} />
+                <a
+                  href="https://github.com/Dusha2k"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  <img src={github} alt="github" />
                 </a>
-                <a>
-                  <img src={vk} />
+                <a
+                  href="https://vk.com/fckurmom"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  <img src={vk} alt="vk" />
                 </a>
               </Social>
             </FooterNav>
@@ -62,10 +71,6 @@ const Footer = () => {
 
 export default Footer;
 
-const MyGrid = styled(Grid)`
-  justify-content: center;
-`;
-
 const SectionFooter = styled.section`
   background: #070720;
   padding-top: 60px;
@@ -77,7 +82,7 @@ const PageUp = styled.div`
   left: 50%;
   top: -25px;
   margin-left: -25px;
-  a {
+  span {
     display: block;
     font-size: 36px;
     height: 50px;
@@ -86,6 +91,7 @@ const PageUp = styled.div`
     line-height: 50px;
     text-align: center;
     border-radius: 50%;
+    cursor: pointer;
     img {
       position: relative;
       width: 40px;
@@ -104,12 +110,6 @@ const FooterNav = styled.div`
   justify-content: center;
   div {
     padding: 0 30px;
-    a {
-      font-size: 15px;
-      color: #b7b7b7;
-      display: block;
-      font-weight: 700;
-    }
   }
 
   @media (max-width: 768px) {
@@ -117,6 +117,15 @@ const FooterNav = styled.div`
       padding: 10px 20px 0 0;
     }
   }
+`;
+
+const A = styled(Link)`
+  font-size: 17px;
+  color: #b7b7b7;
+  display: block;
+  font-weight: 700;
+  cursor: pointer;
+  text-decoration: none;
 `;
 const Social = styled.div`
   display: flex;
@@ -126,6 +135,9 @@ const Social = styled.div`
     margin-right: 25px;
     display: block;
     padding-top: 8px;
+    @media (max-width: 768px) {
+      margin-right: 10px;
+    }
     img {
       width: 25px;
       height: 25px;

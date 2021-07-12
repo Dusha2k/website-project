@@ -1,19 +1,24 @@
 import React from "react";
 import styled from "styled-components";
 import { Grid } from "@material-ui/core";
-
-import imgBG from "../assets/img/trending/trend-1.jpg";
+import { Link } from "react-router-dom";
 
 const BigCard = ({ episodes, russian, episodes_aired, score, image, id }) => {
+  const animeEpisodes = () => {
+    if (episodes === 0) {
+      return `${episodes_aired} / ?`;
+    } else if (episodes_aired === 0) {
+      return `${episodes} / ${episodes}`;
+    } else {
+      return `${episodes_aired} / ${episodes}`;
+    }
+  };
+
   return (
     <Grid item lg={4} md={4} sm={6} xs={12}>
       <Card>
         <CardBG url={image.original}>
-          <Episode>
-            {episodes !== 0
-              ? `${episodes} / ${episodes}`
-              : `${episodes_aired} / ?`}
-          </Episode>
+          <Episode>{animeEpisodes()}</Episode>
           <Rating>
             <span className="material-icons-outlined i">star</span>
             {score}
@@ -24,13 +29,8 @@ const BigCard = ({ episodes, russian, episodes_aired, score, image, id }) => {
           {/*</View>*/}
         </CardBG>
         <Description>
-          <GenresList>
-            <li>Экшен</li>
-            <li>Фильм</li>
-            <li>Сёнен</li>
-          </GenresList>
           <h5>
-            <a>{russian}</a>
+            <A to="/current">{russian}</A>
           </h5>
         </Description>
       </Card>
@@ -91,26 +91,29 @@ const Description = styled.div`
   h5 {
     font-size: 18px;
     margin: 0;
-    a {
-      font-weight: 700;
-      line-height: 26px;
+    Link {
     }
   }
 `;
 
-const GenresList = styled.ul`
-  margin: 0;
-  padding: 0;
-  margin-bottom: 10px;
-  li {
-    list-style: none;
-    font-size: 11px;
-    font-weight: 700;
-    line-height: 1.5;
-    padding: 1px 10px;
-    background: rgba(255, 255, 255, 0.2);
-    border-radius: 50px;
-    display: inline-block;
-    margin-right: 5px;
-  }
+const A = styled(Link)`
+  font-weight: 700;
+  line-height: 26px;
+  text-decoration: none;
 `;
+// const GenresList = styled.ul`
+//   margin: 0;
+//   padding: 0;
+//   margin-bottom: 10px;
+//   li {
+//     list-style: none;
+//     font-size: 11px;
+//     font-weight: 700;
+//     line-height: 1.5;
+//     padding: 1px 10px;
+//     background: rgba(255, 255, 255, 0.2);
+//     border-radius: 50px;
+//     display: inline-block;
+//     margin-right: 5px;
+//   }
+// `;

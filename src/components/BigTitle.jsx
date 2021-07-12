@@ -9,7 +9,7 @@ const BigTitle = ({ title }) => {
       <Grid container>
         <Grid item lg={8} md={8} sm={8}>
           <SectionTitle>
-            <LeftTitle>Новые аниме</LeftTitle>
+            <LeftTitle>{title}</LeftTitle>
           </SectionTitle>
         </Grid>
         <Grid item lg={4} md={4} sm={4}>

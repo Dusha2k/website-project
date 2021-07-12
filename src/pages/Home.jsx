@@ -8,17 +8,17 @@ import BigTitle from "../components/BigTitle";
 import BigCard from "../components/BigCard";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchHomepageAnime } from "../redux/actions/anime";
-const i2 = [3213, 241124, 123123, 238974, 12487, 12498, 12837];
+import { fetchRightSideAnime } from "../redux/actions/anime";
 
 const Home = () => {
   const dispatch = useDispatch();
-  const { items, itemsSeason, itemsNew } = useSelector(
+  const { items, itemsSeason, itemsNew, itemsRightSide } = useSelector(
     ({ homepageAnimeReducer }) => homepageAnimeReducer
   );
-  console.log(items);
 
   useEffect(() => {
     dispatch(fetchHomepageAnime());
+    dispatch(fetchRightSideAnime());
   }, []);
   return (
     <>
@@ -36,7 +36,7 @@ const Home = () => {
                 </Grid>
               </Sections>
               <Sections>
-                <BigTitle title={"Популярное"} />
+                <BigTitle title={"Аниме этого сезона"} />
                 <Grid container spacing={4}>
                   {itemsSeason.map((item) => {
                     return <BigCard {...item} key={item.id} />;
@@ -44,7 +44,7 @@ const Home = () => {
                 </Grid>
               </Sections>
               <Sections>
-                <BigTitle title={"Популярное"} />
+                <BigTitle title={"Ongoing"} />
                 <Grid container spacing={4}>
                   {itemsNew.map((item) => {
                     return <BigCard {...item} key={item.id} />;
@@ -54,16 +54,10 @@ const Home = () => {
             </Grid>
             <Grid item lg={4} md={4} sm={6} xs={8}>
               <RightSection>
-                <RightTitle>Топ просмотров</RightTitle>
-                <RightList>
-                  <li className="active">День</li>
-                  <li>Неделя</li>
-                  <li>Месяц</li>
-                  <li>Год</li>
-                </RightList>
+                <RightTitle>По рейтингу</RightTitle>
               </RightSection>
-              {i2.map((item) => {
-                return <MediumCard key={item} />;
+              {itemsRightSide.map((item) => {
+                return <MediumCard key={item.id} {...item} />;
               })}
             </Grid>
           </Grid>
@@ -107,20 +101,20 @@ const RightTitle = styled.h4`
     content: "";
   }
 `;
-const RightList = styled.ul`
-  position: absolute;
-  right: 0;
-  top: 0;
-  margin: 0;
-  .active {
-    color: white;
-  }
-  li {
-    list-style: none;
-    font-size: 13px;
-    color: #b7b7b7;
-    display: inline-block;
-    margin-right: 7px;
-    cursor: pointer;
-  }
-`;
+// const RightList = styled.ul`
+//   position: absolute;
+//   right: 0;
+//   top: 0;
+//   margin: 0;
+//   .active {
+//     color: white;
+//   }
+//   li {
+//     list-style: none;
+//     font-size: 13px;
+//     color: #b7b7b7;
+//     display: inline-block;
+//     margin-right: 7px;
+//     cursor: pointer;
+//   }
+// `;

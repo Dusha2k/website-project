@@ -1,10 +1,10 @@
 import React from "react";
 import Slider from "react-slick";
-import hero from "../assets/img/hero/hero-1.jpg";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { Grid } from "@material-ui/core";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 function SimpleSlider() {
   const settings = {
@@ -31,7 +31,7 @@ function SimpleSlider() {
                 <div>Adventure</div>
                 <h2>Fate / Stay Night: Unlimited Blade Works</h2>
                 <p>After 30 days of travel across the world...</p>
-                <a>Смотреть</a>
+                <A to="/current">Смотреть</A>
               </Wrap>
             </Grid>
           </FirstBG>
@@ -41,7 +41,7 @@ function SimpleSlider() {
                 <div>Adventure</div>
                 <h2>Lorem ipsum dolor sit amet, consectetur</h2>
                 <p>After 30 days of travel across the world...</p>
-                <a>Смотреть</a>
+                <A to="/current">Смотреть</A>
               </Wrap>
             </Grid>
           </SecondBG>
@@ -54,7 +54,7 @@ function SimpleSlider() {
                   After 30 days of travel across the world... After 30 days of
                   travel across the world...
                 </p>
-                <a>Смотреть</a>
+                <A to="/current">Смотреть</A>
               </Wrap>
             </Grid>
           </ThirdBG>
@@ -88,6 +88,20 @@ const Carousel = styled(Slider)`
     color: white;
     opacity: 1;
   }
+`;
+
+const A = styled(Link)`
+  font-size: 13px;
+  background: #e53637;
+  display: inline-block;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  padding: 14px 20px;
+  border-radius: 4px;
+  margin-right: 1px;
+  cursor: pointer;
+  text-decoration: none;
 `;
 
 const FirstBG = styled.div`
@@ -128,17 +142,5 @@ const Wrap = styled.div`
     color: #ffffff;
     font-size: 16px;
     margin-bottom: 40px;
-  }
-  a {
-    font-size: 13px;
-    background: #e53637;
-    display: inline-block;
-    font-weight: 700;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    padding: 14px 20px;
-    border-radius: 4px;
-    margin-right: 1px;
-    cursor: pointer;
   }
 `;
