@@ -32,7 +32,7 @@ const SectionTitle = styled.div`
 `;
 
 const LeftTitle = styled.h4`
-{
+
   font-weight: 600;
   line-height: 21px;
   text-transform: uppercase;
@@ -49,7 +49,7 @@ const LeftTitle = styled.h4`
     width: 4px;
     background: #e53637;
     content: "";
-  }
+  
 `;
 
 const SectionBtn = styled.div`

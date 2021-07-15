@@ -29,7 +29,7 @@ const Footer = () => {
                 <A to="/">Главная</A>
               </div>
               <div>
-                <A to="/current">Аниме</A>
+                <A to="/anime">Аниме</A>
               </div>
               <Social>
                 <a href="https://t.me/Dusha2k" target="_blank" rel="noreferrer">

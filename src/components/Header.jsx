@@ -31,7 +31,7 @@ const Header = () => {
                 </A>
               </Wrap>
               <Wrap>
-                <A to="/filter">Аниме</A>
+                <A to="/anime">Аниме</A>
               </Wrap>
               <Wrap>
                 <A to="/manga">Манга</A>

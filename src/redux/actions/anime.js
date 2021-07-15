@@ -12,6 +12,11 @@ export const setRightSideAnime = (items) => ({
   payload: items,
 });
 
+export const setAnimeList = (items) => ({
+  type: "SET_ANIME_LIST",
+  payload: items,
+});
+
 export const fetchHomepageAnime = () => (dispatch) => {
   const popularAnime = axios.get(
     `https://shikimori.one/api/animes?limit=6&order=popularity`
@@ -29,6 +34,12 @@ export const fetchHomepageAnime = () => (dispatch) => {
       );
     })
   );
+};
+
+export const fetchSetAnimeList = () => (dispatch) => {
+  axios
+    .get("https://shikimori.one/api/animes?limit=15&order=popularity&page=2")
+    .then(({ data }) => dispatch(setAnimeList(data)));
 };
 
 export const fetchRightSideAnime = () => (dispatch) => {

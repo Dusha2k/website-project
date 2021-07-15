@@ -3,6 +3,7 @@ const initialState = {
   itemsSeason: [],
   itemsNew: [],
   itemsRightSide: [],
+  itemsList: [],
   isLoaded: false,
 };
 
@@ -14,6 +15,12 @@ const homepageAnimeReducer = (state = initialState, action) => {
         items: action.first,
         itemsSeason: action.second,
         itemsNew: action.third,
+      };
+
+    case "SET_ANIME_LIST":
+      return {
+        ...state,
+        itemsList: action.payload,
       };
 
     case "SET_ANIME_RIGHT_SIDE":
