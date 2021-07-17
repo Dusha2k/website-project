@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
-import Filter from "../components/Filter";
+import AnimeFilter from "../components/filter/AnimeFilter";
 import { Container, Grid } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchSetAnimeList } from "../redux/actions/anime";
@@ -8,19 +8,19 @@ import BigCard from "../components/BigCard";
 
 const Search = () => {
   const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(fetchSetAnimeList());
-  }, []);
   const { itemsList } = useSelector(
     ({ homepageAnimeReducer }) => homepageAnimeReducer
   );
-  console.log(itemsList);
+
+  if (itemsList.length === 0) {
+    dispatch(fetchSetAnimeList());
+  }
 
   return (
     <SectionSearch>
       <Container maxWidth="lg">
         <MyGrid container spacing={10}>
-          <Grid item lg={8}>
+          <Grid item sm={12} lg={8}>
             <SectionTitle>
               <Title>Список аниме</Title>
             </SectionTitle>
@@ -31,7 +31,7 @@ const Search = () => {
             </Grid>
           </Grid>
           <Grid item lg={4}>
-            <Filter />
+            <AnimeFilter />
           </Grid>
         </MyGrid>
       </Container>

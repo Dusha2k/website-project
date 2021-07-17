@@ -36,11 +36,11 @@ export const fetchHomepageAnime = () => (dispatch) => {
   );
 };
 
-export const fetchSetAnimeList = () => (dispatch) => {
-  axios
-    .get("https://shikimori.one/api/animes?limit=15&order=popularity&page=2")
-    .then(({ data }) => dispatch(setAnimeList(data)));
-};
+export const fetchSetAnimeList =
+  (url = "https://shikimori.one/api/animes?limit=15&order=popularity&page=1") =>
+  (dispatch) => {
+    axios.get(url).then(({ data }) => dispatch(setAnimeList(data)));
+  };
 
 export const fetchRightSideAnime = () => (dispatch) => {
   axios

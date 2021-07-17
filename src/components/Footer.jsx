@@ -54,10 +54,9 @@ const Footer = () => {
           </Grid>
           <Grid item lg={3} xs={8}>
             <Description>
-              Copyright ©2021 <br />
               This website is made with
               <span className="material-icons-outlined i">favorite</span> <br />
-              by Dusha2k The design is not mine
+              by Dusha2k <br /> The design is not mine
               <span className="material-icons-outlined i">
                 sentiment_very_satisfied
               </span>

@@ -4,6 +4,7 @@ import Header from "./components/Header";
 import Home from "./pages/Home";
 import Search from "./pages/Search";
 import Footer from "./components/Footer";
+import Details from "./pages/Details";
 
 function App() {
   return (
@@ -16,6 +17,9 @@ function App() {
           </Route>
           <Route path="/anime" exact>
             <Search />
+          </Route>
+          <Route path="/anime/details/:id">
+            <Details />
           </Route>
         </Switch>
         <Footer />
