@@ -275,6 +275,16 @@ export default AnimeFilter;
 
 const FilterSection = styled.div`
   padding-left: 30px;
+  button {
+    padding: 5px 10px;
+    border-radius: 10px;
+    color: black;
+    transition: all 1s ease;
+    &:hover {
+      background-color: red;
+      color: white;
+    }
+  }
   ul {
     list-style: none;
     padding: 0;

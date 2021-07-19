@@ -21,7 +21,9 @@ const Footer = () => {
       <Container maxWidth="lg">
         <Grid container>
           <Grid item lg={3} xs={8}>
-            <img src={logo} alt="logo" />
+            <A to="/">
+              <img src={logo} alt="logo" />
+            </A>
           </Grid>
           <Grid item lg={6}>
             <FooterNav>

@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 
-const MdCard = ({ episodes, episodes_aired, score, image, russian }) => {
+const MdCard = ({ episodes, episodes_aired, score, image, russian, id }) => {
   const animeEpisodes = () => {
     if (episodes === 0) {
       return `${episodes_aired} / ?`;
@@ -20,7 +20,7 @@ const MdCard = ({ episodes, episodes_aired, score, image, russian }) => {
           <span className="material-icons-outlined i">star</span> {score}
         </Rank>
         <h5>
-          <A to="/current">{russian}</A>
+          <A to={`/anime/details/${id}`}>{russian}</A>
         </h5>
       </Wrap>
     </>

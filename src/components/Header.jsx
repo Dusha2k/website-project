@@ -1,50 +1,106 @@
-import React, { useState } from "react";
+import { Container, Grid, TextField } from "@material-ui/core";
 import styled from "styled-components";
-import { Container, Grid } from "@material-ui/core";
+import axios from "axios";
 import logo from "../assets/img/logo.png";
-import { Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+
+import { Link, useHistory } from "react-router-dom";
+import { setRandomAnime } from "../redux/actions/animeDetails";
+import { useDispatch, useSelector } from "react-redux";
+import { setAnimeList } from "../redux/actions/anime";
 
 const Header = () => {
   const [menuActive, setMenuActive] = useState(false);
-  const items = [
-    { value: "Главная", href: "/main" },
-    { value: "Аниме", href: "/anime" },
-    { value: "Манга", href: "/manga" },
-    { value: "Случайное аниме", href: "/main" },
-  ];
+  const [inputSearch, setInputSearch] = useState("");
+  const [activeClass, setActiveClass] = useState(0);
+  const history = useHistory();
+  const dispatch = useDispatch();
+  const { randomAnime } = useSelector(
+    ({ detailsAnimeReducer }) => detailsAnimeReducer
+  );
+
+  const setActive = (index) => {
+    setActiveClass(index);
+  };
+  const getActive = (index) => {
+    return index === activeClass ? "active" : "";
+  };
+  const handleChange = (event) => {
+    setInputSearch(event.target.value);
+  };
+  useEffect(() => {
+    if (Object.keys(randomAnime).length !== 0) {
+      history.push(`/anime/details/${randomAnime.id}`);
+    }
+  }, [randomAnime]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  const fetchRandomAnime = () => {
+    setActive(2);
+    axios
+      .get("https://shikimori.one/api/animes?order=random")
+      .then(({ data }) => dispatch(setRandomAnime(data[0])));
+  };
+
+  const fetchSearchAnime = (e) => {
+    setActive(1);
+    e.preventDefault();
+    axios
+      .get(`https://shikimori.one/api/animes?limit=15&search=${inputSearch}`)
+      .then(({ data }) => dispatch(setAnimeList(data)))
+      .then(history.push("/anime"))
+      .then(setInputSearch(""));
+  };
+
   return (
     <Head>
       <Container maxWidth="lg">
         <Grid container justifyContent={"space-between"}>
           <Grid item lg={2} md={2} sm={2}>
             <Logo>
-              <LogoLink to="/">
+              <LogoLink to="/" onClick={() => setActive(0)}>
                 <img src={logo} alt="logo" />
               </LogoLink>
             </Logo>
           </Grid>
-          <Grid item lg={8} md={8} sm={1}>
+          <Grid item lg={7} md={7} sm={1}>
             <NavBar>
               <Wrap>
-                <A to="/" className="active">
+                <A to="/" className={getActive(0)} onClick={() => setActive(0)}>
                   Главная
                 </A>
               </Wrap>
               <Wrap>
-                <A to="/anime">Аниме</A>
+                <A
+                  to="/anime"
+                  className={getActive(1)}
+                  onClick={() => setActive(1)}
+                >
+                  Аниме
+                </A>
               </Wrap>
               <Wrap>
-                <A to="/manga">Манга</A>
-              </Wrap>
-              <Wrap>
-                <A to="/current">Случайное аниме</A>
+                <RandomButton
+                  onClick={fetchRandomAnime}
+                  className={getActive(2)}
+                >
+                  Случайное аниме
+                </RandomButton>
               </Wrap>
             </NavBar>
           </Grid>
-          <Grid item lg={2} md={2} sm={2} xs={2}>
+          <Grid item lg={3} md={3} sm={3} xs={7}>
             <Icons>
-              {/*<img src={accountIcon} alt="account" />*/}
-              {/*<img src={homeIcon} alt="home" />*/}
+              <div>
+                <form onSubmit={fetchSearchAnime}>
+                  <InputText
+                    id="standard-search"
+                    label="Поиск аниме"
+                    type="search"
+                    value={inputSearch}
+                    onChange={handleChange}
+                  />
+                </form>
+              </div>
               <BurgerBtn onClick={() => setMenuActive(!menuActive)}>
                 <span />
               </BurgerBtn>
@@ -62,11 +118,17 @@ const Header = () => {
               <img src={logo} alt="logo" />
             </MenuHeader>
             <ul>
-              {items.map((items) => (
-                <li key={items.value}>
-                  <a href={items.href}>{items.value}</a>
-                </li>
-              ))}
+              <li>
+                <BurgerLink to="/">Главная</BurgerLink>
+              </li>
+              <li>
+                <BurgerLink to="/anime">Аниме</BurgerLink>
+              </li>
+              <li>
+                <BurgerRndLink onClick={fetchRandomAnime}>
+                  Случайное аниме
+                </BurgerRndLink>
+              </li>
             </ul>
           </MenuContent>
         </Blur>
@@ -109,10 +171,12 @@ const Wrap = styled.div`
     margin-right: 0;
     padding: 15px;
   }
-  A.active {
+  A.active,
+  p.active {
     color: white;
   }
-  A {
+  A,
+  p {
     font-size: 17px;
     color: #b7b7b7;
     display: block;
@@ -135,18 +199,23 @@ const Wrap = styled.div`
     }
   }
   &:hover {
-    A:after {
+    A:after,
+    p:after {
       opacity: 1;
       transform: scaleX(1);
     }
-    A {
+    A,
+    p {
       color: white;
     }
   }
 `;
 
+const RandomButton = styled.p`
+  margin: 0;
+`;
+
 const Icons = styled.div`
-  padding: 20px 10px;
   display: flex;
   justify-content: flex-end;
 
@@ -159,7 +228,7 @@ const Icons = styled.div`
 const BurgerBtn = styled.div`
   width: 20px;
   height: 20px;
-  margin-right: 26px;
+  margin: 20px 26px 0 20px;
   position: relative;
   cursor: pointer;
   display: none;
@@ -236,19 +305,33 @@ const MenuContent = styled.div`
     padding: 0;
     li {
       margin-bottom: 20px;
-      a {
-        text-decoration: none;
-        font-size: 1.3rem;
-        color: #b7b7b7;
-        display: block;
-        font-weight: 700;
-        position: relative;
-        cursor: pointer;
-        @media (max-width: 540px) {
-          font-size: 1rem;
-        }
-      }
     }
+  }
+`;
+
+const BurgerLink = styled(Link)`
+  text-decoration: none;
+  font-size: 1.3rem;
+  color: #b7b7b7;
+  display: block;
+  font-weight: 700;
+  position: relative;
+  cursor: pointer;
+  @media (max-width: 540px) {
+    font-size: 1rem;
+  }
+`;
+
+const BurgerRndLink = styled.div`
+  text-decoration: none;
+  font-size: 1.3rem;
+  color: #b7b7b7;
+  display: block;
+  font-weight: 700;
+  position: relative;
+  cursor: pointer;
+  @media (max-width: 540px) {
+    font-size: 1rem;
   }
 `;
 
@@ -256,4 +339,17 @@ const MenuHeader = styled.div`
   font-size: 2rem;
   color: white;
   margin: 35px 0 35px 0;
+`;
+
+const InputText = styled(TextField)`
+  color: white;
+  label {
+    color: white;
+  }
+  input {
+    color: white;
+  }
+  .MuiInput-underline:before {
+    border-bottom-color: white;
+  }
 `;

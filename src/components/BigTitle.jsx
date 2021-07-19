@@ -2,6 +2,7 @@ import React from "react";
 import { Grid } from "@material-ui/core";
 import arrowRight from "../assets/icons/arrow_right.svg";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 const BigTitle = ({ title }) => {
   return (
@@ -14,7 +15,7 @@ const BigTitle = ({ title }) => {
         </Grid>
         <Grid item lg={4} md={4} sm={4}>
           <SectionBtn>
-            <Btn href="#">Показать все</Btn>
+            <Btn to="/anime">Показать все</Btn>
             <img src={arrowRight} alt="arrow" />
           </SectionBtn>
         </Grid>
@@ -63,7 +64,7 @@ const SectionBtn = styled.div`
   }
 `;
 
-const Btn = styled.a`
+const Btn = styled(Link)`
   display: inline-block;
   font-size: 13px;
   font-weight: 700;

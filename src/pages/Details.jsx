@@ -4,34 +4,40 @@ import { Container, Grid } from "@material-ui/core";
 import { useSelector } from "react-redux";
 import {
   fetchDetailsAnime,
-  getDetailsAnime,
+  setDetailsAnime,
 } from "../redux/actions/animeDetails";
 import { useDispatch } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 
 const Details = () => {
   const dispatch = useDispatch();
+  const { pathname } = useLocation();
+  const { id } = useParams();
   const { details } = useSelector(
     ({ detailsAnimeReducer }) => detailsAnimeReducer
   );
 
-  const { id } = useParams();
-
   const currentYoutubeVideo = details.videos?.map((item) => item.player_url);
 
   useEffect(() => {
-    dispatch(fetchDetailsAnime(id));
+    window.scrollTo(0, 0);
+  }, [pathname]);
+
+  useEffect(() => {
+    if (id !== undefined) {
+      dispatch(fetchDetailsAnime(id));
+    }
     return () => {
-      dispatch(getDetailsAnime({}));
+      dispatch(setDetailsAnime({}));
     };
-  }, []);
+  }, [id]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <>
       <Container>
         <CurrentSection>
           <Grid container spacing={5}>
-            <Grid item lg={3} sm={12} xs={12}>
+            <Grid item lg={3} md={3} sm={4} xs={12}>
               <CurrentImg>
                 <img
                   src={`https://shikimori.one/${details.image?.original}`}
@@ -39,12 +45,13 @@ const Details = () => {
                 />
               </CurrentImg>
             </Grid>
-            <Grid item lg={9}>
+            <Grid item lg={9} md={9} sm={8}>
               <AnimeDetails>
                 <Title>
                   <h3>{details.russian}</h3>
                 </Title>
                 <p>
+                  {/* eslint-disable-next-line*/}
                   {details.description?.replace(/\[(?!\d+\])[^\[\]]+\]/g, "")}
                 </p>
                 <Widget>
@@ -110,6 +117,7 @@ const Details = () => {
             ) : (
               <Grid className="youtube" item lg={12}>
                 <iframe
+                  title="video"
                   src={currentYoutubeVideo ? currentYoutubeVideo[0] : ""}
                 />
               </Grid>

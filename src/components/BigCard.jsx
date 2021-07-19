@@ -2,15 +2,8 @@ import React from "react";
 import styled from "styled-components";
 import { Grid } from "@material-ui/core";
 import { Link } from "react-router-dom";
-import {
-  fetchDetailsAnime,
-  getDetailsAnime,
-} from "../redux/actions/animeDetails";
-import { useDispatch } from "react-redux";
 
 const BigCard = ({ episodes, russian, episodes_aired, score, image, id }) => {
-  const dispatch = useDispatch();
-
   const animeEpisodes = () => {
     if (episodes === 0) {
       return `${episodes_aired} / ?`;
@@ -20,7 +13,6 @@ const BigCard = ({ episodes, russian, episodes_aired, score, image, id }) => {
       return `${episodes_aired} / ${episodes}`;
     }
   };
-  const url = `/anime/details/${id}`;
 
   return (
     <Grid item lg={4} md={4} sm={6} xs={12}>
@@ -31,14 +23,13 @@ const BigCard = ({ episodes, russian, episodes_aired, score, image, id }) => {
             <span className="material-icons-outlined i">star</span>
             {score}
           </Rating>
-          {/*<View>*/}
-          {/*  <span className="material-icons-outlined i">visibility</span>*/}
-          {/*  138057*/}
-          {/*</View>*/}
         </CardBG>
         <Description>
           <h5>
-            <A to={url} onClick={() => dispatch(fetchDetailsAnime(id))}>
+            <A
+              to={`/anime/details/${id}`}
+              // onClick={() => dispatch(fetchDetailsAnime(id))}
+            >
               {russian}
             </A>
           </h5>

@@ -5,9 +5,15 @@ import { Container, Grid } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchSetAnimeList } from "../redux/actions/anime";
 import BigCard from "../components/BigCard";
+import { useLocation } from "react-router-dom";
 
-const Search = () => {
+const FilterPage = () => {
   const dispatch = useDispatch();
+
+  const { pathname } = useLocation();
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
   const { itemsList } = useSelector(
     ({ homepageAnimeReducer }) => homepageAnimeReducer
   );
@@ -19,7 +25,7 @@ const Search = () => {
   return (
     <SectionSearch>
       <Container maxWidth="lg">
-        <MyGrid container spacing={10}>
+        <MyGrid container spacing-sm={10} spacing-xs={0}>
           <Grid item sm={12} lg={8}>
             <SectionTitle>
               <Title>Список аниме</Title>
@@ -39,7 +45,7 @@ const Search = () => {
   );
 };
 
-export default Search;
+export default FilterPage;
 
 const MyGrid = styled(Grid)`
   @media (max-width: 768px) {

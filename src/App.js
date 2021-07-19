@@ -2,7 +2,7 @@ import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Header from "./components/Header";
 import Home from "./pages/Home";
-import Search from "./pages/Search";
+import FilterPage from "./pages/FilterPage";
 import Footer from "./components/Footer";
 import Details from "./pages/Details";
 
@@ -16,7 +16,7 @@ function App() {
             <Home />
           </Route>
           <Route path="/anime" exact>
-            <Search />
+            <FilterPage />
           </Route>
           <Route path="/anime/details/:id">
             <Details />

@@ -9,9 +9,14 @@ import BigCard from "../components/BigCard";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchHomepageAnime } from "../redux/actions/anime";
 import { fetchRightSideAnime } from "../redux/actions/anime";
+import { useLocation } from "react-router-dom";
 
 const Home = () => {
   const dispatch = useDispatch();
+  const { pathname } = useLocation();
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
   const { items, itemsSeason, itemsNew, itemsRightSide } = useSelector(
     ({ homepageAnimeReducer }) => homepageAnimeReducer
   );
@@ -19,7 +24,7 @@ const Home = () => {
   useEffect(() => {
     dispatch(fetchHomepageAnime());
     dispatch(fetchRightSideAnime());
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
   return (
     <>
       <Container maxWidth="lg">
