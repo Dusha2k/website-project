@@ -18,6 +18,11 @@ const Details = () => {
   );
 
   const currentYoutubeVideo = details.videos?.map((item) => item.player_url);
+  const sliceHttp = (url) => {
+    let firstUrl = url.split(":");
+    firstUrl[0] = "https:";
+    return firstUrl.join("");
+  };
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -118,7 +123,9 @@ const Details = () => {
               <Grid className="youtube" item lg={12}>
                 <iframe
                   title="video"
-                  src={currentYoutubeVideo ? currentYoutubeVideo[0] : ""}
+                  src={
+                    currentYoutubeVideo ? sliceHttp(currentYoutubeVideo[0]) : ""
+                  }
                 />
               </Grid>
             )}
